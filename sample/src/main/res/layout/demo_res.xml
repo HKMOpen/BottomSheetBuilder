@@ -2,11 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="800dp"
     android:orientation="vertical">
 
-    <TextClock
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:targetApi="jelly_bean_mr1" />
+        android:layout_height="50dp"
+        android:src="@drawable/ic_document"
+        android:tint="@color/colorAccent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_document"
+        android:tint="@color/colorAccent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_document"
+        android:tint="@color/colorAccent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_document"
+        android:tint="@color/colorAccent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_document"
+        android:tint="@color/colorAccent" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_document"
+        android:tint="@color/colorAccent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="demo is smpel" />
+
 </LinearLayout>

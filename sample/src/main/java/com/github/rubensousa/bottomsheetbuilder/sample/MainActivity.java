@@ -259,17 +259,9 @@ public class MainActivity extends AppCompatActivity implements BottomSheetItemCl
         }
         mShowingLongDialog = true;
         mBottomSheetDialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog_Custom)
-                .setMode(BottomSheetBuilder.MODE_GRID)
+                .setMode(BottomSheetBuilder.MODE_FULL_CUSTOM)
                 .setAppBarLayout(appBarLayout)
                 .setItemLayout(R.layout.demo_res)
-                .setMenu(R.menu.menu_bottom_list_sheet)
-                .setItemClickListener(new BottomSheetItemClickListener() {
-                    @Override
-                    public void onBottomSheetItemClick(MenuItem item) {
-                        Log.d("Item click", item.getTitle() + "");
-                        mShowingLongDialog = false;
-                    }
-                })
                 .createDialog();
 
         mBottomSheetDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -279,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetItemCl
             }
         });
         mBottomSheetDialog.show();
+
     }
 
     @Override

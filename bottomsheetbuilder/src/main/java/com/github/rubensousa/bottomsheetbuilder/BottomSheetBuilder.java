@@ -37,6 +37,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.view.SupportMenuInflater;
 import android.support.v7.view.menu.MenuBuilder;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +51,7 @@ public class BottomSheetBuilder {
 
     public static final int MODE_LIST = 0;
     public static final int MODE_GRID = 1;
+    public static final int MODE_FULL_CUSTOM = 2;
     @DrawableRes
     protected int mItemBackground;
     protected int mItemTextColor;
@@ -96,7 +98,7 @@ public class BottomSheetBuilder {
     }
 
     public BottomSheetBuilder setMode(int mode) {
-        if (mode != MODE_LIST && mode != MODE_GRID) {
+        if (mode != MODE_LIST && mode != MODE_GRID && mode != MODE_FULL_CUSTOM) {
             throw new IllegalArgumentException("Mode must be one of BottomSheetBuilder.MODE_LIST" +
                     "or BottomSheetBuilder.MODE_GRID");
         }
@@ -250,10 +252,15 @@ public class BottomSheetBuilder {
             throw new IllegalStateException("You need to provide a coordinatorLayout" +
                     "so the view can be placed on it");
         }
+        View sheet;
 
-        View sheet = mAdapterBuilder.createView(mTitleTextColor, mBackgroundDrawable,
-                mBackgroundColor, mDividerBackground, mItemTextColor, mItemBackground,
-                mIconTintColor, itemLayoutRes, mItemClickListener);
+        if (mMode == MODE_FULL_CUSTOM) {
+            sheet = LayoutInflater.from(mContext).inflate(itemLayoutRes, null);
+        } else {
+            sheet = mAdapterBuilder.createView(mTitleTextColor, mBackgroundDrawable,
+                    mBackgroundColor, mDividerBackground, mItemTextColor, mItemBackground,
+                    mIconTintColor, itemLayoutRes, mItemClickListener);
+        }
 
         ViewCompat.setElevation(sheet, mContext.getResources()
                 .getDimensionPixelSize(R.dimen.bottomsheet_elevation));
@@ -281,14 +288,10 @@ public class BottomSheetBuilder {
 
     public BottomSheetMenuDialog createDialog() {
 
-        if (mMenu == null && mAdapterBuilder.getItems().isEmpty()) {
-            throw new IllegalStateException("You need to provide at least one Menu " +
-                    "or an item with addItem");
-        }
-
         BottomSheetMenuDialog dialog = mTheme == 0
                 ? new BottomSheetMenuDialog(mContext, R.style.BottomSheetBuilder_DialogStyle)
                 : new BottomSheetMenuDialog(mContext, mTheme);
+
 
         if (mTheme != 0) {
             setupThemeColors(mContext.obtainStyledAttributes(mTheme, new int[]{
@@ -302,21 +305,31 @@ public class BottomSheetBuilder {
                     R.attr.bottomSheetBuilderTitleTextColor,}));
         }
 
-        View sheet = mAdapterBuilder.createView(mTitleTextColor, mBackgroundDrawable,
-                mBackgroundColor, mDividerBackground, mItemTextColor, mItemBackground,
-                mIconTintColor, itemLayoutRes, dialog);
+        View sheet;
 
-        sheet.findViewById(R.id.fakeShadow).setVisibility(View.GONE);
+        if (mMode == MODE_FULL_CUSTOM) {
+            sheet = LayoutInflater.from(mContext).inflate(itemLayoutRes, null);
+        } else {
+            if (mMenu == null && mAdapterBuilder.getItems().isEmpty()) {
+                throw new IllegalStateException("You need to provide at least one Menu " +
+                        "or an item with addItem");
+            }
+            sheet = mAdapterBuilder.createView(mTitleTextColor, mBackgroundDrawable,
+                    mBackgroundColor, mDividerBackground, mItemTextColor, mItemBackground,
+                    mIconTintColor, itemLayoutRes, dialog);
+
+            sheet.findViewById(R.id.fakeShadow).setVisibility(View.GONE);
+        }
+
+
         dialog.setAppBar(mAppBarLayout);
         dialog.expandOnStart(mExpandOnStart);
         dialog.delayDismiss(mDelayedDismiss);
         dialog.setBottomSheetItemClickListener(mItemClickListener);
 
         if (mContext.getResources().getBoolean(R.bool.tablet_landscape)) {
-            FrameLayout.LayoutParams layoutParams
-                    = new FrameLayout.LayoutParams(mContext.getResources()
-                    .getDimensionPixelSize(R.dimen.bottomsheet_width),
-                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(mContext.getResources()
+                    .getDimensionPixelSize(R.dimen.bottomsheet_width), ViewGroup.LayoutParams.WRAP_CONTENT);
             dialog.setContentView(sheet, layoutParams);
         } else {
             dialog.setContentView(sheet);
