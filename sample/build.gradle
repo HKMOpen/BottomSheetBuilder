@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion project.ANDROID_BUILD_SDK_VERSION as int
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "com.github.rubensousa.bottomsheetbuilder.sample"
-        minSdkVersion 14
-        targetSdkVersion 25
+        minSdkVersion project.ANDROID_BUILD_MIN_SDK_VERSION as int
+        targetSdkVersion project.ANDROID_BUILD_TARGET_SDK_VERSION as int
         versionCode 1
         versionName "1.0"
     }
@@ -21,9 +21,9 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.1.1'
-    compile 'com.android.support:design:25.1.1'
-    compile 'com.jakewharton:butterknife:8.4.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile supportDependencies.appCompat
+    compile supportDependencies.design
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     compile project(':bottomsheetbuilder')
 }

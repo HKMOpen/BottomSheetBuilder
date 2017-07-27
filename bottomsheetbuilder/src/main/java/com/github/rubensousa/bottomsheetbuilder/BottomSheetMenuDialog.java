@@ -39,11 +39,13 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
     boolean mClicked;
     boolean mRequestCancel;
     boolean mRequestDismiss;
+    boolean mHeightFull;
     OnCancelListener mOnCancelListener;
     private BottomSheetItemClickListener mClickListener;
     private AppBarLayout mAppBarLayout;
     private boolean mExpandOnStart;
     private boolean mDelayDismiss;
+    private int position_right_shift = 0;
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetCallback
             = new BottomSheetBehavior.BottomSheetCallback() {
         @Override
@@ -130,6 +132,7 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
             if (getContext().getResources().getBoolean(R.bool.tablet_landscape)) {
                 CoordinatorLayout.LayoutParams layoutParams
                         = (CoordinatorLayout.LayoutParams) sheet.getLayoutParams();
+
                 layoutParams.width = getContext().getResources()
                         .getDimensionPixelSize(R.dimen.bottomsheet_width);
                 sheet.setLayoutParams(layoutParams);
@@ -219,12 +222,26 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
         }
     }
 
+    public void setPeekHeight(boolean b) {
+        mHeightFull = b;
+    }
+
+
+
+    public void setRightShift(int position) {
+        position_right_shift = position;
+    }
+
     private void fixLandscapePeekHeight(final View sheet) {
         // On landscape, we shouldn't use the 16:9 keyline alignment
         sheet.post(new Runnable() {
             @Override
             public void run() {
-                mBehavior.setPeekHeight(sheet.getHeight() / 2);
+                if (mHeightFull) {
+                    mBehavior.setPeekHeight(sheet.getHeight());
+                } else {
+                    mBehavior.setPeekHeight(sheet.getHeight() / 2);
+                }
             }
         });
     }
@@ -234,5 +251,8 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
                 = (CoordinatorLayout.LayoutParams) sheet.getLayoutParams();
         layoutParams.topMargin = mAppBarLayout.getHeight();
         sheet.setLayoutParams(layoutParams);
+        if (position_right_shift != 0) {
+            sheet.setTranslationX(position_right_shift);
+        }
     }
 }

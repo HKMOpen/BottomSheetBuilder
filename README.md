@@ -1,4 +1,6 @@
 # BottomSheetBuilder
+[ ![Download](https://api.bintray.com/packages/jjhesk/maven/bottomsheetbuilder/images/download.svg) ](https://bintray.com/jjhesk/maven/bottomsheetbuilder/_latestVersion)
+
 A simple library that creates BottomSheets according to the Material Design specs: https://material.google.com/components/bottom-sheets.html
 
 Available from API 14.
@@ -16,7 +18,7 @@ Available from API 14.
 ```groovy
 dependencies {
   compile 'com.android.support:design:25.1.1'
-  compile 'com.github.rubensousa:bottomsheetbuilder:1.6.0'
+  compile 'com.hkm.ui:bottomsheetbuilder:1.6.5'
 }
 ```
 

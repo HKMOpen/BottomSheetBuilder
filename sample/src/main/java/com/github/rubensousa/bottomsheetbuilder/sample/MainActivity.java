@@ -274,6 +274,31 @@ public class MainActivity extends AppCompatActivity implements BottomSheetItemCl
 
     }
 
+    @SuppressWarnings("unused")
+    @OnClick(R.id.onShowTy)
+    public void onShowCustomTwo() {
+        if (mBottomSheetDialog != null) {
+            mBottomSheetDialog.dismiss();
+        }
+        mShowingLongDialog = true;
+        mBottomSheetDialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog_Custom)
+                .setMode(BottomSheetBuilder.MODE_FULL_CUSTOM)
+                .setAppBarLayout(appBarLayout)
+                .setItemLayout(R.layout.demo_res)
+                .setRightShift(300)
+                .setPeekAll()
+                .createDialog();
+
+        mBottomSheetDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mShowingLongDialog = false;
+            }
+        });
+        mBottomSheetDialog.show();
+
+    }
+
     @Override
     public void onBottomSheetItemClick(MenuItem item) {
         mBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);

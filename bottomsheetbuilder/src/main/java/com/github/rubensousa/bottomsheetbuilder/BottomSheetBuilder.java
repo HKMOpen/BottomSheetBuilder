@@ -68,8 +68,10 @@ public class BottomSheetBuilder {
     private int itemLayoutRes = -1;
     private int mBackgroundColor;
     private int mTitleTextColor;
+    private int rightshift = 0;
     private boolean mDelayedDismiss = true;
     private boolean mExpandOnStart = false;
+    private boolean mExpandFullHeight = false;
     private int mMode;
     private Menu mMenu;
     private CoordinatorLayout mCoordinatorLayout;
@@ -120,6 +122,11 @@ public class BottomSheetBuilder {
 
     public BottomSheetBuilder setItemLayout(@LayoutRes int layoutRes) {
         this.itemLayoutRes = layoutRes;
+        return this;
+    }
+
+    public BottomSheetBuilder setPeekAll() {
+        mExpandFullHeight = true;
         return this;
     }
 
@@ -208,6 +215,11 @@ public class BottomSheetBuilder {
 
     public BottomSheetBuilder setDividerBackground(@DrawableRes int background) {
         mDividerBackground = background;
+        return this;
+    }
+
+    public BottomSheetBuilder setRightShift(int shift) {
+        rightshift = shift;
         return this;
     }
 
@@ -320,8 +332,8 @@ public class BottomSheetBuilder {
 
             sheet.findViewById(R.id.fakeShadow).setVisibility(View.GONE);
         }
-
-
+        dialog.setRightShift(rightshift);
+        dialog.setPeekHeight(mExpandFullHeight);
         dialog.setAppBar(mAppBarLayout);
         dialog.expandOnStart(mExpandOnStart);
         dialog.delayDismiss(mDelayedDismiss);

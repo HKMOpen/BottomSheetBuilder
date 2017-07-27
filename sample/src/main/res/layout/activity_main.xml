@@ -50,6 +50,11 @@
             android:layout_height="wrap_content"
             android:text="Dialog with custom view" />
 
+        <Button
+            android:id="@+id/onShowTy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dialog with custom view full height" />
     </LinearLayout>
 
     <android.support.design.widget.AppBarLayout
