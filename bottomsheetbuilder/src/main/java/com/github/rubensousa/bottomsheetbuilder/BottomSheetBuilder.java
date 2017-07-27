@@ -45,6 +45,7 @@ import android.widget.FrameLayout;
 
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetAdapterBuilder;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
+import com.github.rubensousa.bottomsheetbuilder.adapter.popVivController;
 
 
 public class BottomSheetBuilder {
@@ -77,6 +78,7 @@ public class BottomSheetBuilder {
     private CoordinatorLayout mCoordinatorLayout;
     private AppBarLayout mAppBarLayout;
     private BottomSheetItemClickListener mItemClickListener;
+    private popVivController mpopVivController;
 
     public BottomSheetBuilder(Context context, CoordinatorLayout coordinatorLayout) {
         mContext = context;
@@ -114,11 +116,6 @@ public class BottomSheetBuilder {
         return this;
     }
 
-    public BottomSheetBuilder setMenu(@MenuRes int menu) {
-        mMenu = new MenuBuilder(mContext);
-        new SupportMenuInflater(mContext).inflate(menu, mMenu);
-        return setMenu(mMenu);
-    }
 
     public BottomSheetBuilder setItemLayout(@LayoutRes int layoutRes) {
         this.itemLayoutRes = layoutRes;
@@ -191,14 +188,12 @@ public class BottomSheetBuilder {
     }
 
     public BottomSheetBuilder setItemTextColorResource(@ColorRes int color) {
-        mItemTextColor = ResourcesCompat.getColor(mContext.getResources(), color,
-                mContext.getTheme());
+        mItemTextColor = ResourcesCompat.getColor(mContext.getResources(), color, mContext.getTheme());
         return this;
     }
 
     public BottomSheetBuilder setTitleTextColorResource(@ColorRes int color) {
-        mTitleTextColor = ResourcesCompat.getColor(mContext.getResources(), color,
-                mContext.getTheme());
+        mTitleTextColor = ResourcesCompat.getColor(mContext.getResources(), color, mContext.getTheme());
         return this;
     }
 
@@ -253,6 +248,23 @@ public class BottomSheetBuilder {
         return this;
     }
 
+    /**
+     * the controller settings for specific
+     *
+     * @param controller controller
+     * @return bottom sheet builder
+     */
+    public BottomSheetBuilder setControllerView(popVivController controller) {
+        mpopVivController = controller;
+        return this;
+    }
+
+    public BottomSheetBuilder setMenu(@MenuRes int menu) {
+        mMenu = new MenuBuilder(mContext);
+        new SupportMenuInflater(mContext).inflate(menu, mMenu);
+        return setMenu(mMenu);
+    }
+
     public View createView() {
 
         if (mMenu == null && mAdapterBuilder.getItems().isEmpty()) {
@@ -298,6 +310,7 @@ public class BottomSheetBuilder {
         return sheet;
     }
 
+
     public BottomSheetMenuDialog createDialog() {
 
         BottomSheetMenuDialog dialog = mTheme == 0
@@ -321,6 +334,8 @@ public class BottomSheetBuilder {
 
         if (mMode == MODE_FULL_CUSTOM) {
             sheet = LayoutInflater.from(mContext).inflate(itemLayoutRes, null);
+            if (mpopVivController != null)
+                mpopVivController.onCreate(sheet);
         } else {
             if (mMenu == null && mAdapterBuilder.getItems().isEmpty()) {
                 throw new IllegalStateException("You need to provide at least one Menu " +

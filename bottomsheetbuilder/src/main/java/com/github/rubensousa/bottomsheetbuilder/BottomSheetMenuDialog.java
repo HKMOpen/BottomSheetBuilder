@@ -19,6 +19,7 @@ package com.github.rubensousa.bottomsheetbuilder;
 import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -148,10 +149,10 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
                                     applyAppbarMargin(sheet);
                                 }
                             });
-                } else {
-                    applyAppbarMargin(sheet);
                 }
             }
+
+            applyAppbarMargin(sheet);
 
             if (getContext().getResources().getBoolean(R.bool.landscape)) {
                 fixLandscapePeekHeight(sheet);
@@ -178,7 +179,7 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
         }
     }
 
-    public void setAppBar(AppBarLayout appBar) {
+    public void setAppBar(@Nullable AppBarLayout appBar) {
         mAppBarLayout = appBar;
     }
 
@@ -227,7 +228,6 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
     }
 
 
-
     public void setRightShift(int position) {
         position_right_shift = position;
     }
@@ -249,7 +249,9 @@ public class BottomSheetMenuDialog extends BottomSheetDialog implements BottomSh
     private void applyAppbarMargin(View sheet) {
         CoordinatorLayout.LayoutParams layoutParams
                 = (CoordinatorLayout.LayoutParams) sheet.getLayoutParams();
-        layoutParams.topMargin = mAppBarLayout.getHeight();
+        if (mAppBarLayout != null) {
+            layoutParams.topMargin = mAppBarLayout.getHeight();
+        }
         sheet.setLayoutParams(layoutParams);
         if (position_right_shift != 0) {
             sheet.setTranslationX(position_right_shift);

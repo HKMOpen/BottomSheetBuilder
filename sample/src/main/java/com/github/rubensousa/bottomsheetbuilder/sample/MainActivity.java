@@ -283,7 +283,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetItemCl
         mShowingLongDialog = true;
         mBottomSheetDialog = new BottomSheetBuilder(this, R.style.AppTheme_BottomSheetDialog_Custom)
                 .setMode(BottomSheetBuilder.MODE_FULL_CUSTOM)
-                .setAppBarLayout(appBarLayout)
                 .setItemLayout(R.layout.demo_res)
                 .setRightShift(300)
                 .setPeekAll()
