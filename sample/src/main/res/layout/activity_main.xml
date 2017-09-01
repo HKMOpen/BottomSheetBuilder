@@ -17,44 +17,44 @@
             android:id="@+id/showViewBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="View with a grid" />
+            android:text="View with a grid [showViewBtn]" />
 
         <Button
             android:id="@+id/showDialogBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dialog with simple list" />
+            android:text="Dialog with simple list [showDialogBtn]" />
 
         <Button
             android:id="@+id/showDialogLongBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dialog with long list" />
+            android:text="Dialog with long list [showDialogLongBtn]" />
 
         <Button
             android:id="@+id/showDialogHeadersBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dialog with submenus" />
+            android:text="Dialog with [showDialogHeadersBtn]" />
 
         <Button
             android:id="@+id/showDialogGridBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dialog with a grid" />
+            android:text="Dialog with a grid [showDialogGridBtn]" />
 
 
         <Button
             android:id="@+id/onShowCustom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dialog with custom view" />
+            android:text="Dialog with custom view [onShowCustom]" />
 
         <Button
             android:id="@+id/onShowTy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dialog with custom view full height" />
+            android:text="Dialog with custom view full height [onShowTy]" />
     </LinearLayout>
 
     <android.support.design.widget.AppBarLayout
